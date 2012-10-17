@@ -63,5 +63,6 @@ Clients so far tested:
 Any other reports welcome.
 
 ----------------------------------------------------------------
-Mark Taylor
-This work has been supported by Microsoft Research, GAVO and STFC
+*Mark Taylor*
+
+*This work has been supported by Microsoft Research, GAVO and STFC*
