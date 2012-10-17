@@ -44,7 +44,7 @@ Experimental science pages:
 * [Xamin](http://heasarc.gsfc.nasa.gov/xamin) from HEASARC
 * [GAVO Data Center](http://dc.zah.uni-heidelberg.de/)
 
-These use the SAMP javascript library [samp.js](http://www.star.bristol.ac.uk/~mbt/websamp/samp.js). This is undocumented and scrappy, but feel free to take a look if you like. It has been used by various web pages as the basis for Web SAMP capabilities.
+These use the SAMP javascript library [samp.js](https://raw.github.com/astrojs/samp.js/master/samp.js). This is undocumented and scrappy, but feel free to take a look if you like. It has been used by various web pages as the basis for Web SAMP capabilities.
 
 Compatibility
 =============
