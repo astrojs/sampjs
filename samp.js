@@ -320,8 +320,8 @@ var samp = (function() {
                         return;
                     }
                     else if (!l2.completed) {
-                        l2.completed = true;
                         if (+xhr.status === 200) {
+                            l2.completed = true;
                             l2.responseText = xhr.responseText;
                             l2.responseXML = xhr.responseXML;
                             if (l2.onload) {
