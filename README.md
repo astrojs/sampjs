@@ -1,68 +1,209 @@
-SAMP Web Profile
-================
+sampjs
+======
 
-This page provides documentation, examples and supporting materials for the SAMP Web Profile. SAMP is the Simple Application Messaging Protocol: see the [IVOA Standard](http://www.ivoa.net/Documents/latest/SAMP.html) and [additional material](http://www.ivoa.net/samp).
+**sampjs**  is a small JavaScript library for using the
+SAMP Web Profile from within web pages.
 
-The Web Profile allows web applications (applications running within a browser, for instance javascript on a web page) to communicate with SAMP-capable desktop-based tools such as Aladin or TOPCAT, or with other SAMP-aware web apps.
+What is SAMP?
+-------------
 
-Documentation
-=============
+SAMP is the Simple Application Messaging Protocol,
+a platform- and language-neutral protocol
+used for communicating between applications.
+It was developed within the [[http://www.ivoa.net][IVOA]]
+for use with astronomy tools, but the protocol is not specific
+to astronomy.
+See the [[http://www.ivoa.net/Documents/latest/SAMP.html][SAMP Standard]]
+and [[http://www.ivoa.net/samp"][additional material]].
 
-The Web Profile is defined as part of the SAMP 1.3 IVOA Recommendation, see [Section 5](http://www.ivoa.net/Documents/SAMP/20120411/REC-SAMP-1.3-20120411.html#tth_sEc5) of the standard.
+What is the Web Profile?
+------------------------
 
-You can also see an [HTTP log](http://www.star.bristol.ac.uk/~mbt/websamp/http-log.txt) of a short example session (generated using "-web:log http" option of the JSAMP hub).
+SAMP is defined in layers, and the _Profile_ layer
+defines how tools perform the actual communications.
+Two profiles are currently defined: the _Standard Profile_,
+which is suitable for desktop clients, and the _Web Profile_,
+which is suitable for web clients running within a browser
+sandbox.
+The Web Profile is defined as part of version 1.3 of SAMP;
+see
+[[http://www.ivoa.net/Documents/SAMP/20120411/REC-SAMP-1.3-20120411.html#tth_sEc5][Section 5]]
+of the standard for the details.
 
-A talk on SAMP and the Web Profile was presented at ADASS XXI (Paris, 2011). This will be published as M.B.Taylor, T.Boch, J.Fay, M.Fitzpatrick and L.Paioro, "SAMP: Application Messaging for Desktop and Web Applications", ASP Conf. Ser. 461, ADASS XXI, ed. Pascal Ballester, 279. You can see the [submitted paper](http://www.star.bris.ac.uk/~mbt/papers/adassXXI-O26.pdf) or [presentation](http://www.star.bris.ac.uk/~mbt/papers/adassXXI-O26_slides.pdf).
+For a view of what the protocol looks like in action at the byte level
+you can see an [[http-log.txt][HTTP log]] of a short example
+session
+(generated using `-web:log http` option of the JSAMP hub).
 
-Hubs
-====
+A talk on SAMP and the Web Profile was presented at ADASS XXI (Paris, 2011).
+This will be published as
+_M.B.Taylor, T.Boch, J.Fay, M.Fitzpatrick and L.Paioro,
+"SAMP: Application Messaging for Desktop and Web Applications",
+ASP Conf. Ser. 461, ADASS XXI, ed. Pascal Ballester, 279_
+You can see the
+[[http://www.star.bris.ac.uk/~mbt/papers/adassXXI-O26.pdf][submitted paper]] or
+[[http://www.star.bris.ac.uk/~mbt/papers/adassXXI-O26_slides.pdf][presentation]].
 
-A dual-profile hub is available as part of [JSAMP](http://software.astrogrid.org/doc/jsamp/) version 1.2 and later (1.3-1 and later recommended). Run it in one of these ways:
+What is it good for?
+--------------------
 
-* [webstart version](http://www.star.bristol.ac.uk/~mbt/websamp/webhub.jnlp): just click to run if you have java WebStart installed; note the certificate is signed by Peter Draper.
-* [jsamp-1.3-1.jar](http://www.astrogrid.org/maven/org.astrogrid/jars/jsamp-1.3-1.jar): download and run (java -jar).
-* Run [TOPCAT v3.9](http://www.starlink.ac.uk/topcat/) or later. Download the [jar file](http://www.starlink.ac.uk/topcat/topcat-lite.jar) or use [WebStart](http://www.starlink.ac.uk/topcat/topcat-lite.jnlp).
-This hub implements both Standard Profile and Web Profile. This means that clients of both types can communicate seamlessly with each other. See the [JSAMP documentation](http://software.astrogrid.org/doc/jsamp/)
+Putting these things together allows you to write a web page
+which can communicate with other desktop applications running on
+the same machine as the browser displaying it
+(or even with other unrelated web pages in the same browser).
+A simple example is a web page with a button you can click to
+send an image or table (perhaps generated dynamically by the server)
+to a desktop image or table viewer application.
+But more complicated scenarios, including two-way communication,
+are possible too.
 
-[SAMPy](http://pypi.python.org/pypi/sampy/) (Luigi Paioro's Python SAMP implementation) also supports the Web Profile by offering a dual-profile hub since version 1.2.1.
+The technical details of how that can happen and the
+associated security implications are
+discussed in exhaustive detail in the SAMP standard reference above.
 
-Demonstration Clients
-=====================
+How can I run SAMP?
+-------------------
 
-Here are a couple of experimental javascript clients which run in the browser sandbox and use the Web Profile perform 2-way SAMP communications. You must have the Web Profile hub (above) running for them to work.
+All SAMP communications (Standard and Web) are via a <em>Hub</em>,
+a daemon process that brokers messages between clients.
+So for SAMP tools to be able to communicate, a Hub must be running.
+For web clients, this must be a Web Profile-capable hub,
+which currently means
+either
+[[http://software.astrogrid.org/doc/jsamp/][JSAMP]] version >=1.3-1 (Java) or
+[[http://pypi.python.org/pypi/sampy/][SAMPy]] version >=1.2.1 (Python).
 
-Toys
-----
-* [Client Monitor](http://www.star.bristol.ac.uk/~mbt/websamp/monitor.html)
-* [Table Viewer](http://www.star.bristol.ac.uk/~mbt/websamp/tdisplay.html)
-* [Link Broadcaster](http://www.star.bristol.ac.uk/~mbt/websamp/sendlist.html)
-* [Sample](http://www.star.bristol.ac.uk/~mbt/websamp/sample.html)
+There are (at least?) three ways to make this happen:
+   * Some SAMP-aware applications, such as
+     [[http://www.starlink.ac.uk/topcat/][TOPCAT]] and
+     [[http://aladin.u-strasbg.fr/][Aladin]],
+     start a hub automatically when they start up, if one is not already
+     present.
+   * You can download and run a JSAMP or SAMPy hub
+   * You can use Java WebStart to start a JSAMP hub by just clicking here:
+     [[jsamp-hub.jnlp][start hub]].
 
-Experimental science pages:
+How can I write a SAMP-compatible web page?
+-------------------------------------------
 
-* [VizieR search](http://cdsweb.u-strasbg.fr/~boch/SAMP-web-profile/demo/vizier-output-samp-web.html) (Thomas Boch)
-* [Xamin](http://heasarc.gsfc.nasa.gov/xamin) from HEASARC
-* [GAVO Data Center](http://dc.zah.uni-heidelberg.de/)
+Use the `samp.js` javascript library file and write your own code around it.
+You can write a minimal SAMP application (often, all that is required)
+with very little work.
+Usually you will start by importing `samp.js` and `flXHR.js`
+(see the discussion of flXHR below</a>):
 
-These use the SAMP javascript library [samp.js](http://www.star.bristol.ac.uk/~mbt/websamp/samp.js). This is undocumented and scrappy, but feel free to take a look if you like. It has been used by various web pages as the basis for Web SAMP capabilities.
+    <script src="samp.js">
+    <script src="flXHR.js">
 
-Compatibility
-=============
+You can either supply a full path to the js libs or copy them into
+the same directory as the web page.
 
-Clients so far tested:
+Examples
+--------
 
-* Firefox 3.0: OK (requires Flash)
-* Firefox 3.6: OK (pure JavaScript)
-* Internet Explorer 6: OK (requires Flash)
-* Internet Explorer 8: OK (pure JScript)
-* Chrome 7.0: OK (pure JavaScript)
-* Safari 3.2: OK (requires Flash - no cross-domain controls?)
-* Safari 5.0: OK (pure JavaScript)
-* Opera: not working
+Here are some working examples:
+
+   * [[examples/monitor.html][Client Monitor]]
+   * [[examples/tdisplay.html][Table Viewer]]
+   * [[examples/sendlist.html][Link Broadcaster]]
+   * [[examples/sample.html][Sample]]
+
+Don't forget you need to be running a hub for these to work.
+Running other SAMP clients will make it more interesting too -
+here is a WebStart link for, e.g.,
+[[http://www.starlink.ac.uk/topcat/topcat-lite.jnlp][TOPCAT]].
+
+Who's using sampjs?
+-------------------
+
+Some known science uses of this library are:
+
+   * [[http://cdsweb.u-strasbg.fr/~boch/SAMP-web-profile/demo/vizier-output-samp-web.html][VizieR search]] (CDS)
+   * [[http://heasarc.gsfc.nasa.gov/xamin][Xamin]] (HEASARC)
+   * [[http://dc.zah.uni-heidelberg.de/][GAVO Data Center]]
+
+Note some of these may be experimental.
+Feel free to add your own site if you are using sampjs.
+
+What is flXHR?
+--------------
+
+[[http://flxhr.flensed.com/][flXHR]]
+is a clever external library for faking a JavaScript
+XmlHttpRequest Level 2 object by use of Flash.
+
+The SAMP Web Profile has to play some tricks to communicate outside
+of the browser sandbox.  By preference it uses a W3C standard called
+[[http://www.w3.org/TR/cors/][Cross-Origin Resource Sharing]] (CORS)
+to do this.
+However, some browsers do not support CORS, and in these cases it is
+(usually) possible to fall back to using a Flash-based workaround.
+Since Flash is installed very widely in browsers, that makes sampjs
+work almost everywhere (see the discussion of Compatibility below).
+
+Sampjs does not implement the Flash magic on its own, that's done
+by an external library called flXHR.  This contains
+both JavaScript and Flash components.  To get it working
+you need to put all the relevant flXHR files in the same directory
+as the web client page (or something like that) and import the
+flXHR script:
+
+    <script src="flXHR.js"/>
+
+flXHR is hosted at
+[[http://flxhr.flensed.com/]],
+which now redirects to a github site; the project is no longer
+actively maintained, since the recommendation is to use javascript instead.
+You can grab the library files from there; for convenience you can
+find what you need on this site under in the `lib/flxhr`
+directory.
+
+You don't _need_ to use flXHR with samp.js, but if you don't,
+your SAMP client will not run in
+browsers which lack support for CORS
+(see the compatibility section).
+
+Can I contribute?
+-----------------
+
+Please do!  The sampjs project was originally contributed by
+[[http://www.star.bris.ac.uk/~mbt/][Mark Taylor]],
+but I'm not a very competent or enthusiastic
+JavaScript programmer (or git user), so please improve it
+(javascript, documentation, examples, whatever).
+If you want write privileges, let me or somebody else know.
+If somebody else wants to take over looking after the project,
+that suits me too.
+
+Browser Compatibility
+---------------------
+
+Browsers so far tested:
+
+   * Firefox 3.0: OK (requires Flash)</li>
+   * Firefox 3.6: OK (pure JavaScript)</li>
+   * Internet Explorer 6: OK (requires Flash)</li>
+   * Internet Explorer 8: OK (pure JScript)</li>
+   * Chrome 7.0: OK (pure JavaScript)</li>
+   * Safari 3.2<!-- OSX 10.5 -->:
+            OK (requires Flash - no cross-domain controls?)</li>
+   * Safari 5.0: OK (pure JavaScript)</li>
+   * Opera: not working</li>
 
 Any other reports welcome.
 
-----------------------------------------------------------------
-*Mark Taylor*
+History
+-------
 
-*This work has been supported by Microsoft Research, GAVO and STFC*
+This library was originally written by
+[[http://www.star.bristol.ac.uk/~mbt/][Mark Taylor]]
+as a proof of concept when defining the SAMP Web Profile;
+it was not intended for public use.
+As is the way of these things, some people used and adapted it anyway.
+
+It was moved onto the [[http://astrojs.org/][astrojs.org]]
+site in October 2012.
+
+The original work was supported by Microsoft Research, GAVO and STFC.
+
+
