@@ -10,11 +10,11 @@ What is SAMP?
 SAMP is the Simple Application Messaging Protocol,
 a platform- and language-neutral protocol
 used for communicating between applications.
-It was developed within the [[http://www.ivoa.net][IVOA]]
+It was developed within the [IVOA](http://www.ivoa.net/)
 for use with astronomy tools, but the protocol is not specific
 to astronomy.
-See the [[http://www.ivoa.net/Documents/latest/SAMP.html][SAMP Standard]]
-and [[http://www.ivoa.net/samp"][additional material]].
+See the [SAMP Standard](http://www.ivoa.net/Documents/latest/SAMP.html)
+and [additional material](http://www.ivoa.net/samp").
 
 What is the Web Profile?
 ------------------------
@@ -27,11 +27,11 @@ which is suitable for web clients running within a browser
 sandbox.
 The Web Profile is defined as part of version 1.3 of SAMP;
 see
-[[http://www.ivoa.net/Documents/SAMP/20120411/REC-SAMP-1.3-20120411.html#tth_sEc5][Section 5]]
+[Section 5](http://www.ivoa.net/Documents/SAMP/20120411/REC-SAMP-1.3-20120411.html#tth_sEc5)
 of the standard for the details.
 
 For a view of what the protocol looks like in action at the byte level
-you can see an [[http-log.txt][HTTP log]] of a short example
+you can see an [HTTP log](http-log.txt) of a short example
 session
 (generated using `-web:log http` option of the JSAMP hub).
 
@@ -41,8 +41,8 @@ _M.B.Taylor, T.Boch, J.Fay, M.Fitzpatrick and L.Paioro,
 "SAMP: Application Messaging for Desktop and Web Applications",
 ASP Conf. Ser. 461, ADASS XXI, ed. Pascal Ballester, 279_
 You can see the
-[[http://www.star.bris.ac.uk/~mbt/papers/adassXXI-O26.pdf][submitted paper]] or
-[[http://www.star.bris.ac.uk/~mbt/papers/adassXXI-O26_slides.pdf][presentation]].
+[submitted paper](http://www.star.bris.ac.uk/~mbt/papers/adassXXI-O26.pdf) or
+[presentation](http://www.star.bris.ac.uk/~mbt/papers/adassXXI-O26_slides.pdf).
 
 What is it good for?
 --------------------
@@ -64,24 +64,24 @@ discussed in exhaustive detail in the SAMP standard reference above.
 How can I run SAMP?
 -------------------
 
-All SAMP communications (Standard and Web) are via a <em>Hub</em>,
+All SAMP communications (Standard and Web) are via a _Hub_,
 a daemon process that brokers messages between clients.
 So for SAMP tools to be able to communicate, a Hub must be running.
 For web clients, this must be a Web Profile-capable hub,
 which currently means
 either
-[[http://software.astrogrid.org/doc/jsamp/][JSAMP]] version >=1.3-1 (Java) or
-[[http://pypi.python.org/pypi/sampy/][SAMPy]] version >=1.2.1 (Python).
+[JSAMP](http://software.astrogrid.org/doc/jsamp/) version >=1.3-1 (Java) or
+[SAMPy](http://pypi.python.org/pypi/sampy/) version >=1.2.1 (Python).
 
 There are (at least?) three ways to make this happen:
    * Some SAMP-aware applications, such as
-     [[http://www.starlink.ac.uk/topcat/][TOPCAT]] and
-     [[http://aladin.u-strasbg.fr/][Aladin]],
+     [TOPCAT](http://www.starlink.ac.uk/topcat/) and
+     [Aladin](http://aladin.u-strasbg.fr/),
      start a hub automatically when they start up, if one is not already
      present.
    * You can download and run a JSAMP or SAMPy hub
    * You can use Java WebStart to start a JSAMP hub by just clicking here:
-     [[jsamp-hub.jnlp][start hub]].
+     [start hub](jsamp-hub.jnlp).
 
 How can I write a SAMP-compatible web page?
 -------------------------------------------
@@ -90,7 +90,7 @@ Use the `samp.js` javascript library file and write your own code around it.
 You can write a minimal SAMP application (often, all that is required)
 with very little work.
 Usually you will start by importing `samp.js` and `flXHR.js`
-(see the discussion of flXHR below</a>):
+(see the discussion of flXHR below):
 
     <script src="samp.js">
     <script src="flXHR.js">
@@ -103,24 +103,24 @@ Examples
 
 Here are some working examples:
 
-   * [[examples/monitor.html][Client Monitor]]
-   * [[examples/tdisplay.html][Table Viewer]]
-   * [[examples/sendlist.html][Link Broadcaster]]
-   * [[examples/sample.html][Sample]]
+   * [Client Monitor](examples/monitor.html)
+   * [Table Viewer](examples/tdisplay.html)
+   * [Link Broadcaster](examples/sendlist.html)
+   * [Sample](examples/sample.html)
 
 Don't forget you need to be running a hub for these to work.
 Running other SAMP clients will make it more interesting too -
 here is a WebStart link for, e.g.,
-[[http://www.starlink.ac.uk/topcat/topcat-lite.jnlp][TOPCAT]].
+[TOPCAT](http://www.starlink.ac.uk/topcat/topcat-lite.jnlp).
 
 Who's using sampjs?
 -------------------
 
 Some known science uses of this library are:
 
-   * [[http://cdsweb.u-strasbg.fr/~boch/SAMP-web-profile/demo/vizier-output-samp-web.html][VizieR search]] (CDS)
-   * [[http://heasarc.gsfc.nasa.gov/xamin][Xamin]] (HEASARC)
-   * [[http://dc.zah.uni-heidelberg.de/][GAVO Data Center]]
+   * [VizieR search](http://cdsweb.u-strasbg.fr/~boch/SAMP-web-profile/demo/vizier-output-samp-web.html) (CDS)
+   * [Xamin](http://heasarc.gsfc.nasa.gov/xamin) (HEASARC)
+   * [GAVO Data Center](http://dc.zah.uni-heidelberg.de/)
 
 Note some of these may be experimental.
 Feel free to add your own site if you are using sampjs.
@@ -128,13 +128,12 @@ Feel free to add your own site if you are using sampjs.
 What is flXHR?
 --------------
 
-[[http://flxhr.flensed.com/][flXHR]]
-is a clever external library for faking a JavaScript
+**flXHR** is a clever external library for faking a JavaScript
 XmlHttpRequest Level 2 object by use of Flash.
 
 The SAMP Web Profile has to play some tricks to communicate outside
 of the browser sandbox.  By preference it uses a W3C standard called
-[[http://www.w3.org/TR/cors/][Cross-Origin Resource Sharing]] (CORS)
+[Cross-Origin Resource Sharing](http://www.w3.org/TR/cors/) (CORS)
 to do this.
 However, some browsers do not support CORS, and in these cases it is
 (usually) possible to fall back to using a Flash-based workaround.
@@ -151,7 +150,7 @@ flXHR script:
     <script src="flXHR.js"/>
 
 flXHR is hosted at
-[[http://flxhr.flensed.com/]],
+[http://flxhr.flensed.com/](),
 which now redirects to a github site; the project is no longer
 actively maintained, since the recommendation is to use javascript instead.
 You can grab the library files from there; for convenience you can
@@ -167,7 +166,7 @@ Can I contribute?
 -----------------
 
 Please do!  The sampjs project was originally contributed by
-[[http://www.star.bris.ac.uk/~mbt/][Mark Taylor]],
+[Mark Taylor](http://www.star.bris.ac.uk/~mbt/),
 but I'm not a very competent or enthusiastic
 JavaScript programmer (or git user), so please improve it
 (javascript, documentation, examples, whatever).
@@ -195,13 +194,12 @@ Any other reports welcome.
 History
 -------
 
-This library was originally written by
-[[http://www.star.bristol.ac.uk/~mbt/][Mark Taylor]]
+This library was originally written by Mark Taylor
 as a proof of concept when defining the SAMP Web Profile;
 it was not intended for public use.
 As is the way of these things, some people used and adapted it anyway.
 
-It was moved onto the [[http://astrojs.org/][astrojs.org]]
+It was moved onto the [astrojs.org](http://astrojs.org/)
 site in October 2012.
 
 The original work was supported by Microsoft Research, GAVO and STFC.
