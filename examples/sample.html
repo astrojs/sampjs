@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>SAMP Sample</title>
+</head>
+
+<body>
+<script src="samp.js"></script>
+<script src="flXHR.js"></script>
+<script>
+var baseUrl = window.location.href.toString().replace(new RegExp("[^/]*$"), "");
+var meta = {
+    "samp.name": "Sample",
+    "samp.description": "My first SAMP web application",
+    "samp.icon.url": baseUrl + "clientIcon.gif",
+    "author.name": "Mark Taylor",
+};
+var cc = new samp.ClientTracker();
+var callHandler = cc.callHandler;
+callHandler["samp.app.ping"] = function(senderId, message, isCall) {
+    connector.unregister();
+};
+var subs = {
+    "samp.app.ping": {},
+    "samp.hub.disconnect": {},
+    "samp.hub.event.shutdown": {}
+};
+var connector = new samp.Connector("Sample", meta, cc, subs);
+
+onload = function() {
+    document.getElementById("regPanel").
+             appendChild(connector.createRegButtons());
+};
+onunload = function() {
+    connector.unregister();
+};
+</script>
+
+<p>Very simple SAMP application.
+When it registers, it waits for a ping, and then unregisters.
+</p>
+
+<div id="regPanel"></div>
+
+</body>
+</html>
