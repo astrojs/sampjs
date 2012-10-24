@@ -1,0 +1,243 @@
+<html>
+<head><title>sampjs</title></head>
+
+<body>
+<h1>sampjs</h1>
+
+<p><b>sampjs</b> is a small JavaScript library for using the 
+SAMP Web Profile from within web pages.
+</p>
+
+<h3>What is SAMP?</h3>
+
+<p>SAMP is the Simple Application Messaging Protocol,
+a platform- and language-neutral protocol
+used for communicating between applications.
+It was developed within the <a href="http://www.ivoa.net/IVOA/">IVOA</a>
+for use with astronomy tools, but the protocol is not specific
+to astronomy.
+See the <a href="http://www.ivoa.net/Documents/latest/SAMP.html"
+           >SAMP Standard</a>
+and <a href="http://www.ivoa.net/samp">additional material</a>.
+</p>
+
+<a name="web-profile">
+<h3>What is the Web Profile?</h3>
+
+<p>SAMP is defined in layers, and the <em>Profile</em> layer
+defines how tools perform the actual communications.
+Two profiles are currently defined: the <em>Standard Profile</em>,
+which is suitable for desktop clients, and the <em>Web Profile</em>,
+which is suitable for web clients running within a browser
+sandbox.
+The Web Profile is defined as part of version 1.3 of SAMP;
+see
+<a href="http://www.ivoa.net/Documents/SAMP/20120411/REC-SAMP-1.3-20120411.html#tth_sEc5"
+   >Section 5</a> of the standard for the details.
+</p>
+
+<p>For a view of what the protocol looks like in action at the byte level
+you can see an <a href="http-log.txt">HTTP log</a> of a short example
+session
+(generated using "<code>-web:log http</code>" option of the JSAMP hub).
+</p>
+
+<p>A talk on SAMP and the Web Profile was presented at ADASS XXI (Paris, 2011).
+This will be published as
+<em>M.B.Taylor, T.Boch, J.Fay, M.Fitzpatrick and L.Paioro,
+"SAMP: Application Messaging for Desktop and Web Applications",
+ASP Conf. Ser. 461, ADASS XXI, ed. Pascal Ballester, 279</em>.
+You can see the
+<a href="http://www.star.bris.ac.uk/~mbt/papers/adassXXI-O26.pdf"
+   >submitted paper</a> or
+<a href="http://www.star.bris.ac.uk/~mbt/papers/adassXXI-O26_slides.pdf"
+   >presentation</a>.
+</p>
+
+<h3>What is it good for?</h3>
+
+<p>Putting these things together allows you to write a web page
+which can communicate with other desktop applications running on
+the same machine as the browser displaying it
+(or even with other unrelated web pages in the same browser).
+A simple example is a web page with a button you can click to
+send an image or table (perhaps generated dynamically by the server)
+to a desktop image or table viewer application.
+But more complicated scenarios, including two-way communication,
+are possible too.
+</p>
+
+<p>The technical details of how that can happen and the
+associated security implications are
+discussed in exhaustive detail in the SAMP standard reference above.
+</p>
+
+<a name="hub">
+<h3>How can I run SAMP?</h3>
+
+<p>All SAMP communications (Standard and Web) are via a <em>Hub</em>,
+a daemon process that brokers messages between clients.
+So for SAMP tools to be able to communicate, a Hub must be running.
+For web clients, this must be a Web Profile-capable hub,
+which currently means
+either 
+<a href=""http://software.astrogrid.org/doc/jsamp/>JSAMP</a> version &gt;=1.3-1
+(Java)
+or
+<a href="http://pypi.python.org/pypi/sampy/">SAMPy</a> version &gt;=1.2.1
+(Python).
+There are (at least?) three ways to make this happen:
+<ul>
+<li>Some SAMP-aware applications, such as
+    <a href="http://www.starlink.ac.uk/topcat/">TOPCAT</a> and
+    Aladin,
+    start a hub automatically when they start up, if one is not already
+    present.</li>
+<li>You can download and run a JSAMP or SAMPy hub</li>
+<li>You can use Java WebStart to start a JSAMP hub by just clicking here:
+    <a href="jsamp-hub.jnlp">start hub</a>.</li>
+</ul>
+
+
+<h3>How can I write a SAMP-capable web page?</h3>
+
+<p>Use the <href="http://github.com/astrojs/sampjs/samp.js">samp.js</a>
+library and write your own code around it.
+You can write a minimal SAMP application (often, all that is required)
+with very little work.
+Usually you will start by importing samp.js and flXHR.js
+(see <a href="#flxhr">the section on flXHR</a>):
+<pre>
+   &lt;script src="samp.js"/&gt;
+   &lt;script src="flXHR.js"/&gt;
+</pre>
+You can either supply a full path to the js libs or copy them into
+the same directory as the web page.
+</p>
+
+<a name="examples">
+<h3>Examples</h3>
+
+<p>Here are some working examples:</p>
+<ul>
+<li><a href="examples/monitor.html">Client Monitor</a></li>
+<li><a href="examples/tdisplay.html">Table Viewer</a></li>
+<li><a href="examples/sendlist.html">Link Broadcaster</a></li>
+<li><a href="examples/sample.html">Sample</a></li>
+</ul>
+
+<p>Don't forget you need to be running a hub for these to work.
+Running other SAMP clients will make it more interesting too -
+here is a WebStart link for, e.g.,
+<a href="http://www.starlink.ac.uk/topcat/topcat-lite.jnlp">TOPCAT</a>.
+</p>
+
+<a name="deployments">
+<h3>Who's using sampjs?</h3>
+
+<p>Some known science uses of this library are:</p>
+<ul>
+<li><a href="http://cdsweb.u-strasbg.fr/~boch/SAMP-web-profile/demo/vizier-output-samp-web.html">VizieR search</a> (Thomas Boch)</li>
+<li><a href="http://heasarc.gsfc.nasa.gov/xamin">Xamin</a> from HEASARC</li>
+<li><a href="http://dc.zah.uni-heidelberg.de/">GAVO Data Center</a></li>
+</ul>
+<p>Note some of these may be experimental.
+Feel free to add your own site if you are using sampjs.
+</p>
+
+<h3>What is flXHR??</h3>
+
+<p><a href="http://flxhr.flensed.com/">flXHR</a>
+is a clever external library for faking a JavaScript
+XmlHttpRequest Level 2 object by use of Flash.
+</p>
+
+<p>The SAMP Web Profile has to play some tricks to communicate outside
+of the browser sandbox.  By preference it uses a W3C standard called
+<a href="http://www.w3.org/TR/cors/">Cross-Origin Resource Sharing</a> (CORS)
+to do this.
+However, some browsers do not support CORS, and in these cases it is
+(usually) possible to fall back to using a Flash-based workaround.
+Since Flash is installed very widely in browsers, that makes sampjs
+work almost everywhere 
+(see the <a href="#compatibility">compatibility section</a>).
+</p>
+
+<p>Sampjs does not implement the Flash magic on its own, that's done
+by an external library called <code>flXHR</code>.  This contains
+both JavaScript and Flash components.  To get it working
+you need to put all the relevant flXHR files in the same directory
+as the web client page (or something like that) and import the
+flXHR script:
+<pre>
+   &lt;script src="flXHR.js"/&gt;
+</pre>
+flXHR is hosted at
+<a href="http://flxhr.flensed.com/">http://flxhr.flensed.com/</a>,
+which now redirects to a github site; the project is no longer
+actively maintained, since the recommendation is to use javascript instead.
+You can grab the library files from there; for convenience you can
+find what you need on this site under in the <code>lib/flxhr</code>
+directory.
+</p>
+
+<p>You don't <em>need</em> to use flXHR with samp.js, but if you don't,
+your SAMP client will not run in 
+browsers which lack support for CORS
+(see the <a href="#compatibility">compatibility section</a>).
+</p>
+
+
+<a name="contribute">
+<h3>Can I contribute?</h3>
+
+<p>Please do!  The sampjs project was originally contributed by 
+<a href="http://www.star.bris.ac.uk/~mbt/">Mark Taylor</a>,
+but I'm not a very competent or enthusiastic
+JavaScript programmer (or git user), so please improve it
+(javascript, documentation, examples, whatever).
+If you want write privileges, let me or somebody else know.
+If somebody else wants to take over looking after the project,
+that suits me too.
+</p>
+
+
+<a name="compatibility">
+<h3>Browser Compatibility</h3>
+
+<p>Browsers so far tested:
+</p>
+<ul>
+<li>Firefox 3.0: OK (requires Flash)</li>
+<li>Firefox 3.6: OK (pure JavaScript)</li>
+<li>Internet Explorer 6: OK (requires Flash)</li>
+<li>Internet Explorer 8: OK (pure JScript)</li>
+<li>Chrome 7.0: OK (pure JavaScript)</li>
+<li>Safari 3.2<!-- OSX 10.5 -->:
+           OK (requires Flash - no cross-domain controls?)</li>
+<li>Safari 5.0: OK (pure JavaScript)</li>
+<li>Opera: not working</li>
+</ul>
+<p>Any other reports welcome.
+</p>
+
+<a name="history">
+<h3>History</h3>
+
+<p>This library was originally written by
+<a href="http://www.star.bristol.ac.uk/~mbt/">Mark Taylor</a>
+as a proof of concept when defining the SAMP Web Profile;
+it was not intended for public use.
+As is the way of these things, some people used and adapted it anyway.
+</p>
+
+<p>It was moved onto the <a href="http://astrojs.org/">astrojs.org</a>
+site in October 2012.
+</p>
+
+<p>The original work was supported by Microsoft Research, GAVO and STFC.
+</p>
+
+
+</body>
+</html>
