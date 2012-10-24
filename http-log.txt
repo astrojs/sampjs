@@ -1,0 +1,715 @@
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 2
+POST /
+Host: localhost:21012
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110621 Red Hat/3.6-1.el5_6 Firefox/3.6.18
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 115
+Connection: keep-alive
+Content-Type: text/xml; charset=UTF-8
+Referer: http://www.star.bristol.ac.uk/~mbt/websamp/sample.html
+Content-Length: 333
+Origin: http://www.star.bristol.ac.uk
+Pragma: no-cache
+Cache-Control: no-cache
+
+<?xml version='1.0'?>
+<methodCall>
+  <methodName>samp.webhub.register</methodName>
+  <params>
+    <param>
+      <value>
+        <struct>
+          <member>
+            <name>samp.name</name>
+            <value><string>Sample</string></value>
+          </member>
+        </struct>
+      </value>
+    </param>
+  </params>
+</methodCall>
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 2
+200 OK
+Content-Length: 711
+Content-Type: text/xml
+Access-Control-Allow-Origin: http://www.star.bristol.ac.uk
+
+<?xml version='1.0' encoding='UTF-8'?>
+<methodResponse>
+  <params>
+    <param>
+      <value>
+        <struct>
+          <member>
+            <name>samp.hub-id</name>
+            <value>hub</value>
+          </member>
+          <member>
+            <name>samp.self-id</name>
+            <value>c1</value>
+          </member>
+          <member>
+            <name>samp.private-key</name>
+            <value>wk:1_bnebbdelnbuueoxdltjqkcvj</value>
+          </member>
+          <member>
+            <name>samp.url-translator</name>
+            <value>http://127.0.0.1:21012/proxied/wk:1_bnebbdelnbuueoxdltjqkcvj?</value>
+          </member>
+        </struct>
+      </value>
+    </param>
+  </params>
+</methodResponse>
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 6
+POST /
+Host: localhost:21012
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110621 Red Hat/3.6-1.el5_6 Firefox/3.6.18
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 115
+Connection: keep-alive
+Content-Type: text/xml; charset=UTF-8
+Referer: http://www.star.bristol.ac.uk/~mbt/websamp/sample.html
+Content-Length: 900
+Origin: http://www.star.bristol.ac.uk
+Pragma: no-cache
+Cache-Control: no-cache
+
+<?xml version='1.0'?>
+<methodCall>
+  <methodName>samp.webhub.declareMetadata</methodName>
+  <params>
+    <param>
+      <value><string>wk:1_bnebbdelnbuueoxdltjqkcvj</string></value>
+    </param>
+    <param>
+      <value>
+        <struct>
+          <member>
+            <name>samp.name</name>
+            <value><string>Sample</string></value>
+          </member>
+          <member>
+            <name>samp.description</name>
+            <value><string>My first SAMP web application</string></value>
+          </member>
+          <member>
+            <name>samp.icon.url</name>
+            <value><string>http://www.star.bristol.ac.uk/~mbt/websamp/clientIcon.gif</string></value>
+          </member>
+          <member>
+            <name>samp.author</name>
+            <value><string>Mark Taylor</string></value>
+          </member>
+        </struct>
+      </value>
+    </param>
+  </params>
+</methodCall>
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 6
+200 OK
+Content-Length: 144
+Content-Type: text/xml
+Access-Control-Allow-Origin: http://www.star.bristol.ac.uk
+
+<?xml version='1.0' encoding='UTF-8'?>
+<methodResponse>
+  <params>
+    <param>
+      <value></value>
+    </param>
+  </params>
+</methodResponse>
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 7
+POST /
+Host: localhost:21012
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110621 Red Hat/3.6-1.el5_6 Firefox/3.6.18
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 115
+Connection: keep-alive
+Content-Type: text/xml; charset=UTF-8
+Referer: http://www.star.bristol.ac.uk/~mbt/websamp/sample.html
+Content-Length: 224
+Origin: http://www.star.bristol.ac.uk
+Pragma: no-cache
+Cache-Control: no-cache
+
+<?xml version='1.0'?>
+<methodCall>
+  <methodName>samp.webhub.getRegisteredClients</methodName>
+  <params>
+    <param>
+      <value><string>wk:1_bnebbdelnbuueoxdltjqkcvj</string></value>
+    </param>
+  </params>
+</methodCall>
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 7
+200 OK
+Content-Length: 250
+Content-Type: text/xml
+Access-Control-Allow-Origin: http://www.star.bristol.ac.uk
+
+<?xml version='1.0' encoding='UTF-8'?>
+<methodResponse>
+  <params>
+    <param>
+      <value>
+        <array>
+          <data>
+            <value>hub</value>
+          </data>
+        </array>
+      </value>
+    </param>
+  </params>
+</methodResponse>
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 8
+POST /
+Host: localhost:21012
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110621 Red Hat/3.6-1.el5_6 Firefox/3.6.18
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 115
+Connection: keep-alive
+Content-Type: text/xml; charset=UTF-8
+Referer: http://www.star.bristol.ac.uk/~mbt/websamp/sample.html
+Content-Length: 290
+Origin: http://www.star.bristol.ac.uk
+Pragma: no-cache
+Cache-Control: no-cache
+
+<?xml version='1.0'?>
+<methodCall>
+  <methodName>samp.webhub.allowReverseCallbacks</methodName>
+  <params>
+    <param>
+      <value><string>wk:1_bnebbdelnbuueoxdltjqkcvj</string></value>
+    </param>
+    <param>
+      <value><string>1</string></value>
+    </param>
+  </params>
+</methodCall>
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 8
+200 OK
+Content-Length: 144
+Content-Type: text/xml
+Access-Control-Allow-Origin: http://www.star.bristol.ac.uk
+
+<?xml version='1.0' encoding='UTF-8'?>
+<methodResponse>
+  <params>
+    <param>
+      <value></value>
+    </param>
+  </params>
+</methodResponse>
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 13
+POST /
+Host: localhost:21012
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110621 Red Hat/3.6-1.el5_6 Firefox/3.6.18
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 115
+Connection: keep-alive
+Content-Type: text/xml; charset=UTF-8
+Referer: http://www.star.bristol.ac.uk/~mbt/websamp/sample.html
+Content-Length: 282
+Origin: http://www.star.bristol.ac.uk
+Pragma: no-cache
+Cache-Control: no-cache
+
+<?xml version='1.0'?>
+<methodCall>
+  <methodName>samp.webhub.getMetadata</methodName>
+  <params>
+    <param>
+      <value><string>wk:1_bnebbdelnbuueoxdltjqkcvj</string></value>
+    </param>
+    <param>
+      <value><string>hub</string></value>
+    </param>
+  </params>
+</methodCall>
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 13
+200 OK
+Content-Length: 834
+Content-Type: text/xml
+Access-Control-Allow-Origin: http://www.star.bristol.ac.uk
+
+<?xml version='1.0' encoding='UTF-8'?>
+<methodResponse>
+  <params>
+    <param>
+      <value>
+        <struct>
+          <member>
+            <name>samp.name</name>
+            <value>Hub</value>
+          </member>
+          <member>
+            <name>samp.description.text</name>
+            <value>org.astrogrid.samp.hub.HubServiceMode$3$1</value>
+          </member>
+          <member>
+            <name>samp.icon.url</name>
+            <value>http://127.0.0.1:59100/export/1/hub.png</value>
+          </member>
+          <member>
+            <name>author.mail</name>
+            <value>m.b.taylor@bristol.ac.uk</value>
+          </member>
+          <member>
+            <name>author.name</name>
+            <value>Mark Taylor</value>
+          </member>
+        </struct>
+      </value>
+    </param>
+  </params>
+</methodResponse>
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 14
+POST /
+Host: localhost:21012
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110621 Red Hat/3.6-1.el5_6 Firefox/3.6.18
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 115
+Connection: keep-alive
+Content-Type: text/xml; charset=UTF-8
+Referer: http://www.star.bristol.ac.uk/~mbt/websamp/sample.html
+Content-Length: 287
+Origin: http://www.star.bristol.ac.uk
+Pragma: no-cache
+Cache-Control: no-cache
+<?xml version='1.0'?>
+<methodCall>
+  <methodName>samp.webhub.getSubscriptions</methodName>
+  <params>
+    <param>
+      <value><string>wk:1_bnebbdelnbuueoxdltjqkcvj</string></value>
+    </param>
+    <param>
+      <value><string>hub</string></value>
+    </param>
+  </params>
+</methodCall>
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 14
+200 OK
+Content-Length: 352
+Content-Type: text/xml
+Access-Control-Allow-Origin: http://www.star.bristol.ac.uk
+
+<?xml version='1.0' encoding='UTF-8'?>
+<methodResponse>
+  <params>
+    <param>
+      <value>
+        <struct>
+          <member>
+            <name>samp.app.ping</name>
+            <value>
+              <struct>
+              </struct>
+            </value>
+          </member>
+        </struct>
+      </value>
+    </param>
+  </params>
+</methodResponse>
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 15
+POST /
+Host: localhost:21012
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110621 Red Hat/3.6-1.el5_6 Firefox/3.6.18
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 115
+Connection: keep-alive
+Content-Type: text/xml; charset=UTF-8
+Referer: http://www.star.bristol.ac.uk/~mbt/websamp/sample.html
+Content-Length: 284
+Origin: http://www.star.bristol.ac.uk
+Pragma: no-cache
+Cache-Control: no-cache
+
+<?xml version='1.0'?>
+<methodCall>
+  <methodName>samp.webhub.pullCallbacks</methodName>
+  <params>
+    <param>
+      <value><string>wk:1_bnebbdelnbuueoxdltjqkcvj</string></value>
+    </param>
+    <param>
+      <value><string>600</string></value>
+    </param>
+  </params>
+</methodCall>
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 16
+POST /
+Host: localhost:21012
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110621 Red Hat/3.6-1.el5_6 Firefox/3.6.18
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 115
+Connection: keep-alive
+Content-Type: text/xml; charset=UTF-8
+Referer: http://www.star.bristol.ac.uk/~mbt/websamp/sample.html
+Content-Length: 1538
+Origin: http://www.star.bristol.ac.uk
+Pragma: no-cache
+Cache-Control: no-cache
+
+<?xml version='1.0'?>
+<methodCall>
+  <methodName>samp.webhub.declareSubscriptions</methodName>
+  <params>
+    <param>
+      <value><string>wk:1_bnebbdelnbuueoxdltjqkcvj</string></value>
+    </param>
+    <param>
+      <value>
+        <struct>
+          <member>
+            <name>samp.hub.event.shutdown</name>
+            <value>
+              <struct>
+              </struct>
+            </value>
+          </member>
+          <member>
+            <name>samp.hub.disconnect</name>
+            <value>
+              <struct>
+              </struct>
+            </value>
+          </member>
+          <member>
+            <name>samp.hub.event.register</name>
+            <value>
+              <struct>
+              </struct>
+            </value>
+          </member>
+          <member>
+            <name>samp.hub.event.unregister</name>
+            <value>
+              <struct>
+              </struct>
+            </value>
+          </member>
+          <member>
+            <name>samp.hub.event.metadata</name>
+            <value>
+              <struct>
+              </struct>
+            </value>
+          </member>
+          <member>
+            <name>samp.hub.event.subscriptions</name>
+            <value>
+              <struct>
+              </struct>
+            </value>
+          </member>
+          <member>
+            <name>samp.app.ping</name>
+            <value>
+              <struct>
+              </struct>
+            </value>
+          </member>
+        </struct>
+      </value>
+    </param>
+  </params>
+</methodCall>
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 16
+200 OK
+Content-Length: 144
+Content-Type: text/xml
+Access-Control-Allow-Origin: http://www.star.bristol.ac.uk
+
+<?xml version='1.0' encoding='UTF-8'?>
+<methodResponse>
+  <params>
+    <param>
+      <value></value>
+    </param>
+  </params>
+</methodResponse>
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 15
+200 OK
+Content-Length: 4615
+Content-Type: text/xml
+Access-Control-Allow-Origin: http://www.star.bristol.ac.uk
+
+<?xml version='1.0' encoding='UTF-8'?>
+<methodResponse>
+  <params>
+    <param>
+      <value>
+        <array>
+          <data>
+            <value>
+              <struct>
+                <member>
+                  <name>samp.methodName</name>
+                  <value>receiveNotification</value>
+                </member>
+                <member>
+                  <name>samp.params</name>
+                  <value>
+                    <array>
+                      <data>
+                        <value>hub</value>
+                        <value>
+                          <struct>
+                            <member>
+                              <name>samp.mtype</name>
+                              <value>samp.hub.event.subscriptions</value>
+                            </member>
+                            <member>
+                              <name>samp.params</name>
+                              <value>
+                                <struct>
+                                  <member>
+                                    <name>subscriptions</name>
+                                    <value>
+                                      <struct>
+                                        <member>
+                                          <name>samp.hub.event.subscriptions</name>
+                                          <value>
+                                            <struct>
+                                            </struct>
+                                          </value>
+                                        </member>
+                                        <member>
+                                          <name>samp.hub.event.metadata</name>
+                                          <value>
+                                            <struct>
+                                            </struct>
+                                          </value>
+                                        </member>
+                                        <member>
+                                          <name>samp.hub.event.unregister</name>
+                                          <value>
+                                            <struct>
+                                            </struct>
+                                          </value>
+                                        </member>
+                                        <member>
+                                          <name>samp.hub.event.shutdown</name>
+                                          <value>
+                                            <struct>
+                                            </struct>
+                                          </value>
+                                        </member>
+                                        <member>
+                                          <name>samp.hub.disconnect</name>
+                                          <value>
+                                            <struct>
+                                            </struct>
+                                          </value>
+                                        </member>
+                                        <member>
+                                          <name>samp.hub.event.register</name>
+                                          <value>
+                                            <struct>
+                                            </struct>
+                                          </value>
+                                        </member>
+                                        <member>
+                                          <name>samp.app.ping</name>
+                                          <value>
+                                            <struct>
+                                            </struct>
+                                          </value>
+                                        </member>
+                                      </struct>
+                                    </value>
+                                  </member>
+                                  <member>
+                                    <name>id</name>
+                                    <value>c1</value>
+                                  </member>
+                                </struct>
+                              </value>
+                            </member>
+                          </struct>
+                        </value>
+                      </data>
+                    </array>
+                  </value>
+                </member>
+              </struct>
+            </value>
+          </data>
+        </array>
+      </value>
+    </param>
+  </params>
+</methodResponse>
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 18
+POST /
+Host: localhost:21012
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110621 Red Hat/3.6-1.el5_6 Firefox/3.6.18
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 115
+Connection: keep-alive
+Content-Type: text/xml; charset=UTF-8
+Referer: http://www.star.bristol.ac.uk/~mbt/websamp/sample.html
+Content-Length: 284
+Origin: http://www.star.bristol.ac.uk
+Pragma: no-cache
+Cache-Control: no-cache
+
+<?xml version='1.0'?>
+<methodCall>
+  <methodName>samp.webhub.pullCallbacks</methodName>
+  <params>
+    <param>
+      <value><string>wk:1_bnebbdelnbuueoxdltjqkcvj</string></value>
+    </param>
+    <param>
+      <value><string>600</string></value>
+    </param>
+  </params>
+</methodCall>
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 18
+200 OK
+Content-Length: 1429
+Content-Type: text/xml
+Access-Control-Allow-Origin: http://www.star.bristol.ac.uk
+
+<?xml version='1.0' encoding='UTF-8'?>
+<methodResponse>
+  <params>
+    <param>
+      <value>
+        <array>
+          <data>
+            <value>
+              <struct>
+                <member>
+                  <name>samp.methodName</name>
+                  <value>receiveCall</value>
+                </member>
+                <member>
+                  <name>samp.params</name>
+                  <value>
+                    <array>
+                      <data>
+                        <value>hub</value>
+                        <value>hub_A_4489_ping-tag</value>
+                        <value>
+                          <struct>
+                            <member>
+                              <name>samp.mtype</name>
+                              <value>samp.app.ping</value>
+                            </member>
+                            <member>
+                              <name>samp.params</name>
+                              <value>
+                                <struct>
+                                </struct>
+                              </value>
+                            </member>
+                          </struct>
+                        </value>
+                      </data>
+                    </array>
+                  </value>
+                </member>
+              </struct>
+            </value>
+          </data>
+        </array>
+      </value>
+    </param>
+  </params>
+</methodResponse>
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 20
+POST /
+Host: localhost:21012
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.18) Gecko/20110621 Red Hat/3.6-1.el5_6 Firefox/3.6.18
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 115
+Connection: keep-alive
+Content-Type: text/xml; charset=UTF-8
+Referer: http://www.star.bristol.ac.uk/~mbt/websamp/sample.html
+Content-Length: 214
+Origin: http://www.star.bristol.ac.uk
+Pragma: no-cache
+Cache-Control: no-cache
+
+<?xml version='1.0'?>
+<methodCall>
+  <methodName>samp.webhub.unregister</methodName>
+  <params>
+    <param>
+      <value><string>wk:1_bnebbdelnbuueoxdltjqkcvj</string></value>
+    </param>
+  </params>
+</methodCall>
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 20
+200 OK
+Content-Length: 144
+Content-Type: text/xml
+Access-Control-Allow-Origin: http://www.star.bristol.ac.uk
+
+<?xml version='1.0' encoding='UTF-8'?>
+<methodResponse>
+  <params>
+    <param>
+      <value></value>
+    </param>
+  </params>
+</methodResponse>
+
