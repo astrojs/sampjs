@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<jnlp spec="1.0+" href="http://marktaylor.github.com/hub/webhub.jnlp">
+<jnlp spec="1.0+" href="http://marktaylor.github.com/sampjs/hub/webhub.jnlp">
   <information>
     <title>JSAMP Hub</title>
     <description>Dual-profile (Standard/Web) SAMP Hub</description>
