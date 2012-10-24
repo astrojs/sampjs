@@ -1,0 +1,40 @@
+<html>
+<head><title>Link Broadcaster</title></head>
+
+<body>
+<script src="lib/samp.js"></script>
+<script src="lib/json2.js"></script>
+<script src="lib/flxhr/flXHR.js"></script>
+<script src="broadcaster.js"></script>
+
+<h2>Link Broadcaster</h2>
+
+<p>This page is a list of links which uses the
+<a href="broadcaster.js">broadcaster.js</a> script to
+add broadcast buttons for links which are marked up with additional
+<code>class="broadcaster"</code> and <code>mtype</code> attributes.
+</p>
+
+<div id="regPanel"></div>
+
+<div id="links">
+<ul>
+<li><a href="http://andromeda.star.bris.ac.uk/topcat/data/ACE_data.vot"
+       class="broadcaster"
+       mtype="table.load.votable"
+       >ACE_data.vot</a></li>
+<li><a href="http://andromeda.star.bris.ac.uk/topcat/data/messier.xml"
+       class="broadcaster"
+       mtype="table.load.votable"
+       >messier.xml</a></li>
+<li><a href="http://andromeda.star.bris.ac.uk/topcat/data/6dfgs_mini.fits"
+       class="broadcaster"
+       mtype="table.load.fits"
+       >6dfgs_mini.fits</a></li>
+<li><a href="http://andromeda.star.bris.ac.uk/topcat/data/B_sn.fits"
+       >B_sn.fits</a></li>
+</ul>
+</div>
+
+</body>
+</html>

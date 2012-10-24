@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<jnlp spec="1.0+" codebase="http://marktaylor.github.com/sampjs/hub"
+                  href="webhub.jnlp">
+  <information>
+    <title>JSAMP Hub</title>
+    <description>Dual-profile (Standard/Web) SAMP Hub</description>
+    <vendor>Mark Taylor</vendor>
+    <icon href="clientIcon.gif"/>
+    <offline-allowed/>
+    <shortcut><desktop/></shortcut>
+  </information>
+  <security>
+    <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.4+"/>
+    <jar href="jsamp.jar"/>
+  </resources>
+  <application-desc main-class="org.astrogrid.samp.hub.Hub">
+  </application-desc>
+</jnlp>
