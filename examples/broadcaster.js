@@ -6,6 +6,8 @@
 // This will add a button following the <a> which sends a notifyAll
 // with the specified MType and a "url" parameter having the value
 // of the <a> element's href attribute.
+// If an additional attribute "sendname" is added to the <a> element,
+// its value is used as the text for the broadcast button.
 
 (function() {
    var baseUrl = window.location.href.toString().
@@ -84,12 +86,15 @@
          var aEl = aEls[ia];
          var mtype = aEl.getAttribute("mtype");
          var url = toUrl(aEl.href);
+         var sendName = aEl.hasAttribute("sendname")
+                      ? aEl.getAttribute("sendname") : "Broadcast";
          sendButt = document.createElement("button");
          sendButt.setAttribute("type", "button");
          sendButt.className = sendClass;
-         sendButt.appendChild(document.createTextNode("Broadcast"));
+         sendButt.appendChild(document.createTextNode(sendName));
          sendButt.onclick = loadAction(mtype, url);
          aEl.parentNode.insertBefore(sendButt, aEl.nextSibling);
+         aEl.parentNode.insertBefore(document.createTextNode(" "), sendButt);
       }
    };
 
