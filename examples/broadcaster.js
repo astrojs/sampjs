@@ -1,7 +1,11 @@
 // Script to allow broadcast of links.
+//
 // To make a link which acquires a "broadcast" button, give a <a> element
 // the class "broadcaster" and an appropriate "mtype" attribute, e.g.:
 //   <a href="table.vot" class="broadcaster" mtype="table.load.votable"/>
+// This will add a button following the <a> which sends a notifyAll
+// with the specified MType and a "url" parameter having the value
+// of the <a> element's href attribute.
 
 (function() {
    var baseUrl = window.location.href.toString().
@@ -10,7 +14,23 @@
    var loadAction = function(mtype, url) {
       return function() {
          var message = new samp.Message(mtype, {"url": url});
-         connector.connection.notifyAll([message]);
+         var regSuccessHandler = function(conn) {
+             connector.setConnection(conn);
+             conn.notifyAll([message]);
+         };
+         var registerAndSend = function() {
+             samp.register(connector.name, regSuccessHandler, null);
+         };
+
+         // If we have a connection, try sending.
+         // If that fails, or if we don't have a connection to start with,
+         // attempt to register and then send.
+         if (connector.connection) {
+             connector.connection.notifyAll([message], null, registerAndSend);
+         }
+         else {
+             registerAndSend();
+         }
       }
    };
 
@@ -87,18 +107,11 @@
    };
    var connector = new samp.Connector("Web Sender", meta, null, null);
 
-   connector.onreg = function() {
-      setBroadcastLinksActive(true);
-   };
-   connector.onunreg = function() {
-      setBroadcastLinksActive(false);
-   };
+   setInterval(function() {samp.ping(setBroadcastLinksActive);}, 2000);
 
    onload = function() {
-      document.getElementById("regPanel").
-               appendChild(connector.createRegButtons());
       addBroadcastLinks();
-      setBroadcastLinksActive(false);
+      samp.ping(setBroadcastLinksActive);
    };
    onunload = function() {
       connector.unregister();
