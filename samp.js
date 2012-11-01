@@ -1016,6 +1016,18 @@ var samp = (function() {
         xClient.execute(regRequest, resultHandler, errorHandler);
     };
 
+    var ping = function(pingHandler) {
+        var xClient = new XmlRpcClient();
+        var pingRequest = new XmlRpcRequest(WEBSAMP_PREFIX + "ping");
+        var resultHandler = function(result) {
+            pingHandler(true);
+        };
+        var errorHandler = function(error) {
+            pingHandler(false);
+        };
+        xClient.execute(pingRequest, resultHandler, errorHandler);
+    };
+
 
     /* Exports. */
     var jss = {};
@@ -1026,6 +1038,7 @@ var samp = (function() {
     jss.TYPE_LIST = TYPE_LIST;
     jss.TYPE_MAP = TYPE_MAP;
     jss.register = register;
+    jss.ping = ping;
     jss.isSubscribed = isSubscribed;
     jss.Connector = Connector;
     jss.CallableClient = CallableClient;
