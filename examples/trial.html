@@ -1,0 +1,32 @@
+<html>
+<head><title>Connect on Demand</title></head>
+
+<body>
+<script src="lib/samp.js"></script>
+<script>
+var connector = new samp.Connector("Sender");
+var msg = new samp.Message("table.load.votable",
+                           {"url": "file:///mbt/data/table/messier.xml"});
+var send = function(conn) {
+    conn.notifyAll([msg]);
+};
+var sendOnDemand = function() {
+    connector.connectOnDemand(send);
+};
+configureSampEnabled = function(isConnected) {
+    sendButt.disabled = !isConnected;
+};
+onload = function() {
+    var sendButt = document.getElementById("sendButt");
+    samp.ping(configureSampEnabled);
+};
+setInterval(function() {samp.ping(configureSampEnabled);}, 2000);
+</script>
+
+<h2>Connect on Demand</h2>
+
+<button id="sendButt" type="button" disabled="disabled"
+        onclick="sendOnDemand()">Send</button>
+
+</body>
+</html>

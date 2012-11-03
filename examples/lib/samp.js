@@ -965,6 +965,34 @@ var samp = (function() {
         }
         setRegText(this, "No");
     };
+    Connector.prototype.connectOnDemand = function(connHandler, regErrorHandler) {
+        var connector = this;
+        var regSuccessHandler = function(conn) {
+            connector.setConnection(conn);
+            connHandler(conn);
+        };
+        var regFailureHandler = function(e) {
+            connector.setConnection(undefined);
+            regErrorHandler(e);
+        };
+        var pingResultHandler = function(result) {
+            connHandler(connector.connection);
+        };
+        var pingErrorHandler = function(err) {
+            register(this.name, regSuccessHandler, regFailureHandler);
+        };
+        if (this.connection) {
+            // Use getRegisteredClients as the most lightweight check
+            // I can think of that this connection is still OK.
+            // Ping doesn't work because the server replies even if the
+            // private-key is incorrect/invalid.  Is that a bug or not?
+            this.connection.
+                 getRegisteredClients([], pingResultHandler, pingErrorHandler);
+        }
+        else {
+            register(this.name, regSuccessHandler, regFailureHandler);
+        }
+    };
 
     var isSubscribed = function(subs, mtype) {
         var matching = function(pattern, mtype) {
