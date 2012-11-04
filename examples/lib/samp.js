@@ -965,7 +965,7 @@ var samp = (function() {
         }
         setRegText(this, "No");
     };
-    Connector.prototype.connectOnDemand = function(connHandler, regErrorHandler) {
+    Connector.prototype.runWithConnection = function(connHandler, regErrorHandler) {
         var connector = this;
         var regSuccessHandler = function(conn) {
             connector.setConnection(conn);

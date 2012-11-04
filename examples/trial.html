@@ -7,17 +7,18 @@
 var connector = new samp.Connector("Sender");
 var msg = new samp.Message("table.load.votable",
                            {"url": "file:///mbt/data/table/messier.xml"});
-var send = function(conn) {
-    conn.notifyAll([msg]);
+var send = function() {
+    connector.runWithConnection(function(conn) {
+        conn.notifyAll([msg]);
+    });
 };
-var sendOnDemand = function() {
-    connector.connectOnDemand(send);
-};
+var sbutt = undefined;
 configureSampEnabled = function(isConnected) {
-    sendButt.disabled = !isConnected;
+    sbutt.disabled = !isConnected;
 };
 onload = function() {
-    var sendButt = document.getElementById("sendButt");
+    sbutt = document.getElementById("sendButt");
+    sbutt.disabled = true;
     samp.ping(configureSampEnabled);
 };
 setInterval(function() {samp.ping(configureSampEnabled);}, 2000);
@@ -25,8 +26,7 @@ setInterval(function() {samp.ping(configureSampEnabled);}, 2000);
 
 <h2>Connect on Demand</h2>
 
-<button id="sendButt" type="button" disabled="disabled"
-        onclick="sendOnDemand()">Send</button>
+<button id="sendButt" type="button" onclick="send()">Send</button>
 
 </body>
 </html>
