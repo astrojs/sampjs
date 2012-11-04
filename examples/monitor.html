@@ -125,10 +125,10 @@ var createClientNode = function(id) {
             if (connector.connection) {
                 var tag = createTag();
                 var doneFunc = function(responderId, msgTag, response) {
-                    button.removeAttribute("disabled");
+                    button.disabled = false;
                     delete cc.replyHandler[tag];
                 };
-                button.setAttribute("disabled", "disabled");
+                button.disabled = true;
                 cc.replyHandler[tag] = doneFunc;
                 connector.connection.call([id, tag, msg], null, doneFunc);
             }
