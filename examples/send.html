@@ -1,0 +1,32 @@
+<html>
+<head><title>Send Table</title></head>
+<body>
+<script src="lib/samp.js"></script>
+<script>
+  // Broadcasts a table given a hub connection.
+  var send = function(connection) {
+      var msg = new samp.Message("table.load.votable",
+                                 {"url": "file:///mbt/data/table/messier.xml"});
+      connection.notifyAll([msg]);
+  };
+
+  // Adjusts page content depending on whether the hub exists or not.
+  var configureSampEnabled = function(isHubRunning) {
+      document.getElementById("sendButt").hidden = !isHubRunning;
+  };
+
+  // Arrange for document to be adjusted for presence of hub every 2 sec.
+  var connector = new samp.Connector("Sender");
+  onload = function() {
+      connector.onHubAvailability(configureSampEnabled, 2000);
+  };
+  onunload = function() {
+      connector.close();
+  };
+</script>
+
+I have a table.
+<button id="sendButt" type="button" onclick="connector.runWithConnection(send)">Send It!</button>
+
+</body>
+</html>
