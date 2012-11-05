@@ -19,9 +19,8 @@ configureSampEnabled = function(isConnected) {
 onload = function() {
     sbutt = document.getElementById("sendButt");
     sbutt.disabled = true;
-    samp.ping(configureSampEnabled);
+    connector.onHubAvailability(configureSampEnabled, 2000);
 };
-setInterval(function() {samp.ping(configureSampEnabled);}, 2000);
 </script>
 
 <h2>Connect on Demand</h2>

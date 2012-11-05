@@ -965,7 +965,8 @@ var samp = (function() {
         }
         setRegText(this, "No");
     };
-    Connector.prototype.runWithConnection = function(connHandler, regErrorHandler) {
+    Connector.prototype.runWithConnection =
+            function(connHandler, regErrorHandler) {
         var connector = this;
         var regSuccessHandler = function(conn) {
             connector.setConnection(conn);
@@ -992,6 +993,13 @@ var samp = (function() {
         else {
             register(this.name, regSuccessHandler, regFailureHandler);
         }
+    };
+    Connector.prototype.onHubAvailability = function(availHandler, millis) {
+        samp.ping(availHandler);
+
+        // Could use the W3C Page Visibility API to avoid making these
+        // checks when the page is not visible.
+        setInterval(function() {samp.ping(availHandler);}, millis);
     };
 
     var isSubscribed = function(subs, mtype) {
