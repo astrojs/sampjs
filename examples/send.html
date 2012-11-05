@@ -21,7 +21,7 @@
       connector.onHubAvailability(configureSampEnabled, 2000);
   };
   onunload = function() {
-      connector.close();
+      connector.unregister();
   };
 </script>
 
