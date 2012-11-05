@@ -965,6 +965,42 @@ var samp = (function() {
         }
         setRegText(this, "No");
     };
+    Connector.prototype.runWithConnection =
+            function(connHandler, regErrorHandler) {
+        var connector = this;
+        var regSuccessHandler = function(conn) {
+            connector.setConnection(conn);
+            connHandler(conn);
+        };
+        var regFailureHandler = function(e) {
+            connector.setConnection(undefined);
+            regErrorHandler(e);
+        };
+        var pingResultHandler = function(result) {
+            connHandler(connector.connection);
+        };
+        var pingErrorHandler = function(err) {
+            register(this.name, regSuccessHandler, regFailureHandler);
+        };
+        if (this.connection) {
+            // Use getRegisteredClients as the most lightweight check
+            // I can think of that this connection is still OK.
+            // Ping doesn't work because the server replies even if the
+            // private-key is incorrect/invalid.  Is that a bug or not?
+            this.connection.
+                 getRegisteredClients([], pingResultHandler, pingErrorHandler);
+        }
+        else {
+            register(this.name, regSuccessHandler, regFailureHandler);
+        }
+    };
+    Connector.prototype.onHubAvailability = function(availHandler, millis) {
+        samp.ping(availHandler);
+
+        // Could use the W3C Page Visibility API to avoid making these
+        // checks when the page is not visible.
+        setInterval(function() {samp.ping(availHandler);}, millis);
+    };
 
     var isSubscribed = function(subs, mtype) {
         var matching = function(pattern, mtype) {
