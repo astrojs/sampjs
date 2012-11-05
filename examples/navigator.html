@@ -1,0 +1,40 @@
+<html>
+<body>
+  <script src="html5slider.js"></script> <!-- required for firefox but not chrome -->
+  <script src="lib/samp.js"></script>
+  <script>
+
+    // Set up hub registration/unregistration.
+    var meta = {
+        "samp.name": "SkyNavigator",
+        "samp.description": "Simple sky position controller"
+    };
+    var connector = new samp.Connector("SkyNavigator", meta);
+    onload = function() {
+        document.getElementById("regPanel").appendChild(connector.createRegButtons());
+    };
+    onunload = function() {
+        connector.unregister();
+    };
+
+    // Action to send messages when sliders change value.
+    var posChange = function() {
+        var ra = document.getElementById("RA").value;
+        var dec = document.getElementById("Dec").value;
+        document.getElementById("pos").innerHTML = ra + ", " + dec;
+        var message = new samp.Message("coord.pointAt.sky",
+                                       {"ra": ra, "dec": dec});
+        connector.connection.notifyAll([message]);
+    };
+  </script>
+  <p>When registered and the sliders are moved, they send appropriate
+  <code>coord.pointAt.sky</code> messages.  If Aladin is running in
+  all-sky mode, this will change the view position accordingly.
+  </p>
+
+  <div id="regPanel"></div>
+  <div>RA:  <input id="RA"  type="range" onchange="posChange()" value="180" min="0" max="360" step="0.25" size="70%" /></div>
+  <div>Dec: <input id="Dec" type="range" onchange="posChange()" value="0" min="-90" max="90" step="0.25" size="70%" /></div>
+  <div>Pos: <span id="pos"></span></div>
+</body>
+</html>
