@@ -1,0 +1,14 @@
+<html>
+<head><title>Pinger</title></head>
+<body>
+<h2>Really minimal SAMP web page</h2>
+<script src="lib/samp.js"></script>
+<script>
+  var connector = new samp.Connector("pinger", {"samp.name": "Pinger"})
+  var pingFunc = function(connection) {
+    connection.notifyAll([new samp.Message("samp.app.ping", {})])
+  }
+</script>
+<button onclick="connector.runWithConnection(pingFunc)">Ping</button>
+</body>
+</html>
