@@ -1,9 +1,22 @@
+// samp
+// ----
+// Provides capabilities for using the SAMP Web Profile from JavaScript.
+// Exported tokens are in the samp.* namespace.
+// Inline documentation is somewhat patchy (partly because I don't know
+// what javascript documentation is supposed to look like) - it is
+// suggested to use it conjunction with the provided examples,
+// currently visible at http://astrojs.github.com/sampjs/
+// (gh-pages branch of github sources).
+
 var samp = (function() {
+
+    // Constants defining well-known location of SAMP Web Profile hub etc.
     var WEBSAMP_PORT = 21012;
     var WEBSAMP_PATH = "/";
     var WEBSAMP_PREFIX = "samp.webhub.";
     var WEBSAMP_CLIENT_PREFIX = "";
 
+    // Tokens representing permissible types in a SAMP object (e.g. a message)
     TYPE_STRING = "string";
     TYPE_LIST = "list";
     TYPE_MAP = "map";
@@ -13,6 +26,9 @@ var samp = (function() {
         F.prototype = proto;
         return new F();
     };
+
+    // Utility functions for navigating DOM etc.
+    // -----------------------------------------
 
     var getSampType = function(obj) {
         if (typeof obj === "string") {
@@ -75,12 +91,25 @@ var samp = (function() {
         return typeof JSON === "undefined" ? "..." : JSON.stringify(obj);
     };
 
+    // XmlRpc class:
+    // Utilities for packing and unpacking XML-RPC messages.
+    // See xml-rpc.com.
+
     var XmlRpc = {};
+
+    // Takes text and turns it into something suitable for use as the content
+    // of an XML-RPC string - special characters are escaped.
     XmlRpc.escapeXml = function(s) {
         return s.replace(/&/g, "&amp;")
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;");
     };
+
+    // Asserts that the elements of paramList match the types given by typeList.
+    // TypeList must be an array containing only TYPE_STRING, TYPE_LIST
+    // and TYPE_MAP objects in some combination.  paramList must be the
+    // same length.
+    // In case of mismatch an error is thrown.
     XmlRpc.checkParams = function(paramList, typeList) {
         var i;
         for (i = 0; i < typeList.length; i++) {
@@ -107,6 +136,9 @@ var samp = (function() {
                           + "[" + actualTypeList + "]");
         }
     };
+
+    // Turns a SAMP object (structure of strings, lists, maps) into an
+    // XML string suitable for use with XML-RPC.
     XmlRpc.valueToXml = function v2x(obj, prefix) {
         prefix = prefix || "";
         var a;
@@ -153,6 +185,9 @@ var samp = (function() {
             throw new Error("bad type");  // shouldn't get here
         }
     };
+
+    // Turns an XML string from and XML-RPC message into a SAMP object
+    // (structure of strings, lists, maps).
     XmlRpc.xmlToValue = function x2v(valueEl, allowInt) {
         var childEls = getChildElements(valueEl);
         var i;
@@ -221,6 +256,9 @@ var samp = (function() {
             throw new Error("Bad XML-RPC <value> content - multiple elements");
         }
     };
+
+    // Turns the content of an XML-RPC <params> element into an array of
+    // SAMP objects.
     XmlRpc.decodeParams = function(paramsEl) {
         var paramEls = getChildElements(paramsEl, "param");
         var i;
@@ -230,10 +268,20 @@ var samp = (function() {
         }
         return results;
     };
+
+    // Turns the content of an XML-RPC <fault> element into an XmlRpc.Fault
+    // object.
     XmlRpc.decodeFault = function(faultEl) {
         var faultObj = XmlRpc.xmlToValue(getSoleChild(faultEl, "value"), true);
         return new XmlRpc.Fault(faultObj.faultString, faultObj.faultCode);
     };
+
+    // Turns an XML-RPC response element (should be <methodResponse>) into
+    // either a SAMP response object or an XmlRpc.Fault object.
+    // Note that a fault response does not throw an error, so check for
+    // the type of the result if you want to know whether a fault occurred.
+    // An error will however be thrown if the supplied XML does not
+    // correspond to a legal XML-RPC response.
     XmlRpc.decodeResponse = function(xml) {
         var mrEl = xml.documentElement;
         if (mrEl.tagName !== "methodResponse") {
@@ -251,6 +299,9 @@ var samp = (function() {
                           + " <" + contentEl.tagName + ">");
         }
     };
+
+    // XmlRpc.Fault class:
+    // Represents an XML-RPC Fault response.
     XmlRpc.Fault = function(faultString, faultCode) {
         this.faultString = faultString;
         this.faultCode = faultCode;
@@ -259,6 +310,8 @@ var samp = (function() {
         return "XML-RPC Fault (" + this.faultCode + "): " + this.faultString;
     };
 
+    // XmlRpcRequest class:
+    // Represents an call which can be sent to an XML-RPC server.
     var XmlRpcRequest = function(methodName, params) {
         this.methodName = methodName;
         this.params = params || [];
@@ -298,20 +351,48 @@ var samp = (function() {
         return lines.join("\n");
     };
 
+    // XmlRpcClient class:
+    // Object capable of sending XML-RPC calls to an XML-RPC server.
+    // That server will typically reside on the host on which the
+    // javascript is running; it is not likely to reside on the host
+    // which served the javascript.  That means that sandboxing restrictions
+    // will be in effect.  Much of the work done here is therefore to
+    // do the client-side work required to potentially escape the sandbox.
+    // The endpoint parameter, if supplied, is the URL of the XML-RPC server.
+    // If absent, the default SAMP Web Profile server is used.
     var XmlRpcClient = function(endpoint) {
         this.endpoint = endpoint ||
                         "http://localhost:" + WEBSAMP_PORT + WEBSAMP_PATH;
     };
+
+    // Creates an XHR facade - an object that presents an interface
+    // resembling that of an XMLHttpRequest Level 2.
+    // This facade may be based on an actual XMLHttpRequest Level 2 object
+    // (on browsers that support it), or it may fake one using other
+    // available technology.
+    //
+    // The created facade in any case presents the following interface:
+    //
+    //    open(method, url)
+    //    send(body)
+    //    abort()
+    //    setContentType()
+    //    responseText
+    //    responseXML
+    //    onload
+    //    onerror(err)  - includes timeout; abort is ignored
+    //
+    // See the documentation at http://www.w3.org/TR/XMLHttpRequest/
+    // for semantics.
+    //
+    // XMLHttpRequest Level 2 supports Cross-Origin Resource Sharing (CORS)
+    // which makes sandbox evasion possible.  Faked XHRL2s returned by
+    // this method may use CORS or some other technology to evade the
+    // sandbox.  The SAMP hub itself may selectively allow some of these
+    // technologies and not others, according to configuration.
     XmlRpcClient.createXHR = function() {
-        // interface:
-        //    open(method, url)
-        //    send(body)
-        //    abort()
-        //    setContentType()
-        //    responseText
-        //    responseXML
-        //    onload
-        //    onerror(err)  - includes timeout; abort is ignored
+
+        // Creates an XHR facade based on a genuine XMLHttpRequest Level 2.
         var XhrL2 = function(xhr) {
             this.xhr = xhr;
             xhr.onreadystatechange = (function(l2) {
@@ -372,6 +453,8 @@ var samp = (function() {
                 this.xhr.setRequestHeader("Content-Type", mimeType);
             }
         }
+
+        // Creates an XHR facade based on an XDomainRequest (IE8+ only).
         var XdrL2 = function(xdr) {
             this.xdr = xdr;
             xdr.onload = (function(l2) {
@@ -422,21 +505,36 @@ var samp = (function() {
         XdrL2.prototype.setContentType = function(mimeType) {
             // can't do it.
         };
+
+        // Creates an XHR Facade based on available XMLHttpRequest-type
+        // capabilibities.
+        // If an actual XMLHttpRequest Level 2 is available, use that.
         if (typeof XMLHttpRequest !== "undefined") {
             var xhr = new XMLHttpRequest();
             if ("withCredentials" in xhr) {
                 return new XhrL2(xhr);
             }
         }
+
+        // Else if an XDomainRequest is available, use that.
         if (typeof XDomainRequest !== "undefined") {
             return new XdrL2(new XDomainRequest());
         }
+
+        // Else fake an XMLHttpRequest using Flash/flXHR, if available
+        // and use that.
         if (typeof flensed.flXHR !== "undefined") {
             return new XhrL2(new flensed.flXHR({instancePooling: true}));
         }
+
+        // No luck.
         throw new Error("no cross-origin mechanism available");
     };
-    // errHandler may be passed an XmlRpc.Fault or a thrown Error.
+
+    // Executes a request by passing it to the XML-RPC server.
+    // On success, the result is passed to the resultHandler.
+    // On failure, the errHandler is called with one of two possible
+    // arguments: an XmlRpc.Fault object, or an Error object.
     XmlRpcClient.prototype.execute = function(req, resultHandler, errHandler) {
         (function(xClient) {
             var xhr;
@@ -498,11 +596,40 @@ var samp = (function() {
         })(this);
     };
 
+    // Message class:
+    // Aggregates an MType string and a params map.
     var Message = function(mtype, params) {
         this["samp.mtype"] = mtype;
         this["samp.params"] = params;
     };
 
+    // Connection class:
+    // this is what clients use to communicate with the hub.
+    //
+    // All the methods from the Hub Abstract API as described in the
+    // SAMP standard are available as methods of a Connection object.
+    // The initial private-key argument required by the Web Profile is
+    // handled internally by this object - you do not need to supply it
+    // when calling one of the methods.
+    //
+    // All these calls have the same form:
+    //
+    //    connection.method([method-args], resultHandler, errorHandler)
+    //
+    // the first argument is an array of the arguments (as per the SAMP
+    // abstract hub API), the second argument is a function which is
+    // called on successful completion with the result of the SAMP call
+    // as its argument, and the third argument is a function which is
+    // called on unsuccessful completion with an error object as its
+    // argument.  The resultHandler and errorHandler arguments are optional.
+    //
+    // So for instance if you have a Connection object conn,
+    // you can send a notify message to all other clients by doing, e.g.:
+    //
+    //    conn.notifyAll([new samp.Message(mtype, params)])
+    //
+    // Connection has other methods as well as the hub API ones
+    // as documented below.
     var Connection = function(regInfo) {
         this.regInfo = regInfo;
         this.privateKey = regInfo["samp.private-key"];
@@ -567,6 +694,9 @@ var samp = (function() {
         delete this.regInfo;
         delete this.privateKey;
     };
+
+    // Closes this connection.  It unregisters from the hub if still
+    // registered, but may harmlessly be called multiple times.
     Connection.prototype.close = function() {
         var e;
         if (this.closed) {
@@ -590,6 +720,21 @@ var samp = (function() {
             }
         }
     };
+
+    // Arranges for this connection to receive callbacks.
+    //
+    // The callableClient argument must be an object implementing the
+    // SAMP callable client API, i.e. it must have the following methods:
+    //
+    //     receiveNotification(string sender-id, map message)
+    //     receiveCall(string sender-id, string msg-id, map message)
+    //     receiveResponse(string responder-id, string msg-tag, map response)
+    // 
+    // The successHandler argument will be called with no arguments if the
+    // allowCallbacks hub method completes successfully - it is a suitable
+    // hook to use for declaring subscriptions.
+    //
+    // The CallableClient class provides a suitable implementation, see below.
     Connection.prototype.setCallable = function(callableClient,
                                                 successHandler) {
         var e;
@@ -688,6 +833,11 @@ var samp = (function() {
             this.xClient.execute(request, successHandler, closer);
         }
     };
+
+    // Takes a public URL and returns a URL that can be used from within
+    // this javascript context.  Some translation may be required, since
+    // a URL sent by an external application may be cross-domain, in which
+    // case browser sandboxing would typically disallow access to it.
     Connection.prototype.translateUrl = function(url) {
         var translator = this.regInfo["samp.url-translator"] || "";
         return translator + url;
@@ -698,6 +848,17 @@ var samp = (function() {
         this.resultKey = resultKey;
     };
 
+    // Suitable implementation for a callable client object which can
+    // be supplied to Connection.setCallable().
+    // Its callHandler and replyHandler members are string->function maps
+    // which can be used to provide handler functions for MTypes and
+    // message tags respectively.
+    //
+    // In more detail:
+    // The callHandler member maps a string representing an MType to
+    // a function with arguments (senderId, message, isCall).
+    // The replyHandler member maps a string representing a message tag to
+    // a function with arguments (responderId, msgTag, response).
     var CallableClient = function(connection) {
         this.callHandler = {};
         this.replyHandler = {};
@@ -769,6 +930,10 @@ var samp = (function() {
 
     // ClientTracker is a CallableClient which also provides tracking of
     // registered clients.
+    //
+    // Its onchange member, if defined, will be called with arguments
+    // (client-id, change-type, associated-data) whenever the list or
+    // characteristics of registered clients has changed.
     var ClientTracker = function() {
         var tracker = this;
         this.ids = {};
@@ -841,6 +1006,17 @@ var samp = (function() {
         return (meta && meta["samp.name"]) ? meta["samp.name"] : "[" + id + "]";
     };
 
+    // Connector class:
+    // A higher level class which can manage transparent hub
+    // registration/unregistration and client tracking.
+    //
+    // On construction, the name argument is mandatory, and corresponds
+    // to the samp.name item submitted at registration time.
+    // The other arguments are optional.
+    // meta is a metadata map (if absent, no metadata is declared)
+    // callableClient is a callable client object for receiving callbacks
+    // (if absent, the client is not callable).
+    // subs is a subscriptions map (if absent, no subscriptions are declared)
     var Connector = function(name, meta, callableClient, subs) {
         this.name = name;
         this.meta = meta;
@@ -927,6 +1103,12 @@ var samp = (function() {
             this.setConnection(null);
         }
     };
+
+    // Returns a document fragment which contains Register/Unregister
+    // buttons for use by the user to attempt to connect/disconnect
+    // with the hub.  This is useful for models where explicit
+    // user registration is encouraged or required, but when using
+    // the register-on-demand model such buttons are not necessary.
     Connector.prototype.createRegButtons = function() {
         var connector = this;
         var regButt = document.createElement("button");
@@ -952,6 +1134,7 @@ var samp = (function() {
         this.update();
         return node;
     };
+
     Connector.prototype.update = function() {
         var i;
         var isConnected = !! this.connection;
@@ -965,6 +1148,27 @@ var samp = (function() {
         }
         setRegText(this, "No");
     };
+
+    // Provides execution of a SAMP operation with register-on-demand.
+    // You can use this method to provide lightweight registration/use
+    // of web SAMP.  Simply provide a connHandler function which
+    // does something with a connection (e.g. sends a message) and
+    // Connector.runWithConnection on it.  This will connect if not
+    // already connected, and call the connHandler on with the connection.
+    // No explicit registration action is then required from the user.
+    //
+    // If the regErrorHandler argument is supplied, it is a function of
+    // one (error) argument called in the case that registration-on-demand
+    // fails.
+    //
+    // This is a more-or-less complete sampjs page:
+    //   <script>
+    //     var connector = new samp.Connector("pinger", {"samp.name": "Pinger"})
+    //     var pingFunc = function(connection) {
+    //       connection.notifyAll([new samp.Message("samp.app.ping", {})])
+    //     }
+    //   </script>
+    //   <button onclick="connector.runWithConnection(pingFunc)">Ping</button>
     Connector.prototype.runWithConnection =
             function(connHandler, regErrorHandler) {
         var connector = this;
@@ -994,14 +1198,23 @@ var samp = (function() {
             register(this.name, regSuccessHandler, regFailureHandler);
         }
     };
+
+    // Sets up an interval timer to run at intervals and notify a callback
+    // about whether a hub is currently running.
+    // Every millis milliseconds, the supplied availHandler function is
+    // called with a boolean argument: true if a (web profile) hub is
+    // running, false if not.
+    // Returns the interval timer (can be passed to clearInterval()).
     Connector.prototype.onHubAvailability = function(availHandler, millis) {
         samp.ping(availHandler);
 
         // Could use the W3C Page Visibility API to avoid making these
         // checks when the page is not visible.
-        setInterval(function() {samp.ping(availHandler);}, millis);
+        return setInterval(function() {samp.ping(availHandler);}, millis);
     };
 
+    // Determines whether a given subscriptions map indicates subscription
+    // to a given mtype.
     var isSubscribed = function(subs, mtype) {
         var matching = function(pattern, mtype) {
             if (pattern == mtype) {
@@ -1031,6 +1244,11 @@ var samp = (function() {
         return false;
     }
 
+    // Attempts registration with a SAMP hub.
+    // On success the supplied connectionHandler function is called
+    // with the connection as an argument, on failure the supplied
+    // errorHandler is called with an argument that may be an Error
+    // or an XmlRpc.Fault.
     var register = function(appName, connectionHandler, errorHandler) {
         var xClient = new XmlRpcClient();
         var regRequest = new XmlRpcRequest(WEBSAMP_PREFIX + "register");
@@ -1052,6 +1270,10 @@ var samp = (function() {
         xClient.execute(regRequest, resultHandler, errorHandler);
     };
 
+    // Calls the hub ping method once.  It is not necessary to be
+    // registered to do this.
+    // The supplied pingHandler function is called with a boolean argument:
+    // true if a (web profile) hub is running, false if not.
     var ping = function(pingHandler) {
         var xClient = new XmlRpcClient();
         var pingRequest = new XmlRpcRequest(WEBSAMP_PREFIX + "ping");
