@@ -6,6 +6,9 @@
 
 <p><b>sampjs</b> is a small JavaScript library for using the 
 SAMP Web Profile from within web pages.
+The project is hosted on github at
+<a href="http://github.com/astrojs/sampjs/"
+   >http://github.com/astrojs/sampjs/</a>.
 </p>
 
 <h3>What is SAMP?</h3>
@@ -106,8 +109,8 @@ There are (at least?) three ways to make this happen:
 library and write your own code around it.
 You can write a minimal SAMP application (often, all that is required)
 with very little work.
-Usually you will start by importing samp.js and flXHR.js
-(see <a href="#flxhr">the section on flXHR</a>):
+Usually you will start by importing samp.js (and flXHR.js?
+see <a href="#flxhr">the section on flXHR</a>):
 <pre>
    &lt;script src="samp.js"/&gt;
    &lt;script src="flXHR.js"/&gt;
@@ -197,6 +200,8 @@ directory.
 your SAMP client will not run in 
 browsers which lack support for CORS
 (see the <a href="#compatibility">compatibility section</a>).
+Does that matter?  IE6 and Firefox 3.0 are probably pretty unusual by
+now, so maybe it's not worth the effort.  You decide.
 </p>
 
 
@@ -221,6 +226,11 @@ on the <code>gh-pages</code> branch
 (that's the way that github hosts web pages).
 </p>
 
+<p>There is no mailing list specifically for sampjs, but the IVOA
+<a href="http://www.ivoa.net/pipermail/apps-samp/">apps-samp@ivoa.net</a>
+list may be suitable, or you could try asking Mark
+(m.b.taylor@bristol.ac.uk).
+</p>
 
 <a name="compatibility">
 <h3>Browser Compatibility</h3>
