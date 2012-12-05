@@ -115,9 +115,22 @@ see <a href="#flxhr">the section on flXHR</a>):
    &lt;script src="samp.js"/&gt;
    &lt;script src="flXHR.js"/&gt;
 </pre>
-You can either supply a full path to the js libs or copy them into
+<p>You can either supply a full path to the js libs or copy them into
 the same directory as the web page.
 </p>
+
+<p>If you want a more compact version of the samp javascript,
+you can use a minifying tool.  One possibility is Google's
+<a href="http://closure-compiler.appspot.com/">closure-compiler</a>.
+Here is an example invocation using <code>curl</code>:
+</p>
+<pre>
+   curl -dcompilation_level=ADVANCED_OPTIMIZATIONS \
+        -doutput_format=text \
+        -doutput_info=compiled_code \
+        --data-urlencode js_code@/foo/bar/samp.js \
+        http://closure-compiler.appspot.com/compile
+</pre>
 
 <a name="examples">
 <h3>Examples</h3>
