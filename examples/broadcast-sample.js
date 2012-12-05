@@ -1,4 +1,4 @@
-// A sippet of javascript that should help you add a "Broadcast Table"
+// A sippet of javascript/jquery that should help you add a "Broadcast Table"
 // functionality to your web page
 
 // To use this, change everything that says ADAPT and have a button
@@ -6,61 +6,66 @@
 // For convenience, this uses jquery, but it wouldn't be hard to
 // remove this dependency, no advanced stuff is being used.
 
-SAMP_NAME = "ADAPT";
-SAMP_DESCRIPTION = "ADAPT";
-SAMP_ICON_URL = "ADAPT";
 
 function getVOTableURL() {
 	ADAPT -- this must return the URL of a VOTable for what you are
 	showing.
 }
 
+function _makeSAMPSuccessHandler(sampButton, tableURL) {
+	// returns the callback for a successful hub connection
+	return function(conn) {
+		conn.declareMetadata([{
+			"samp.description": ADAPT (what is it the user is going to see?)
+			"samp.icon.url": ADAPT (a smallish logo for your web page)
+		}]);
 
-function makeConnection(onSuccess) {
-// sets up a connection to the SAMP hub; if the hub is reachable, onSuccess
-// is called.  The function sets things up such that the connection is
-// closed when the page is left.
-	var meta = {
-		"samp.name": SAMP_NAME,
-		"samp.description": SAMP_DESCRIPTION,
-		"samp.icon.url": SAMP_ICON_URL,
-		};
-	var connector = new samp.Connector("DaCHS Web", meta);
-	connector.register(
-		onSuccess,
-		function(err) {
-			alert("Could not connect to SAMP hub: "+err);
-		});
-}
-
-
-function connectAndSendSAMP(sampButton, tableSource) {
-	makeConnection(function(conn) {
+		// set the button up so clicks send again without reconnection.
 		sampButton.unbind("click");
+		sampButton.click(function(e) {
+			sendSAMP(conn, tableURL);
+		});
+
+		// make sure we unregister when the user leaves the page
 		$(window).unload(function() {
 			conn.unregister();
 		});
-		sampButton.click(function(e) {
-			sendSAMP(conn, tableSource);
-		});
-		sendSAMP(conn, tableSource);
-	});
+
+		// send the stuff once (since the connection has been established
+		// in response to a click alread)
+		sendSAMP(conn, tableURL);
+	};
 }
 
+function connectAndSendSAMP(sampButton, tableURL) {
+	samp.register(ADAPT (a short name for what you're up to)
+		_makeSAMPSuccessHandler(sampButton, tableURL),
+		function(err) {
+			alert("Could not connect to SAMP hub: "+err);
+		}
+	);
+}
 
-function sendSAMP(conn, tableSource) {
+function sendSAMP(conn, tableURL) {
 	var msg = new samp.Message("table.load.votable", {
-		"table-id": "ADAPT",
-		"url": getVOTableURL(),
-		"name": "ADAPT"});
+		"table-id": ADAPT,
+		"url": tableURL,
+		"name": ADAPT});
 	conn.notifyAll([msg]);
 }
 
-
 $(document).ready(function() {
 	var sampButton = $('#sendViaSAMP');
+	var tableURL = ADAPT (the URL of the VOTable that should be sent)
 	sampButton.click(function (e) {
-		connectAndSendSAMP(sampButton);
+		connectAndSendSAMP(sampButton, tableURL);
 	})
 });
+
+
+// in the document, you'd write, at an appropriate place:
+// <button id="sendViaSAMP" title="Broadcasts this table to all 
+// SAMP clients on your desktop.
+// This needs a fairly modern hub to work.">Send via SAMP</button>
+// (or whatever else you fancy).
 
