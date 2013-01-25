@@ -9,7 +9,7 @@
 
   // Broadcasts a table given a hub connection.
   var send = function(connection) {
-      var msg = new samp.Message("table.load.votable", tableUrl);
+      var msg = new samp.Message("table.load.votable", {"url": tableUrl});
       connection.notifyAll([msg]);
   };
 
