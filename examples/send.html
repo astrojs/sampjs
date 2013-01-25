@@ -3,10 +3,13 @@
 <body>
 <script src="lib/samp.js"></script>
 <script>
+  // URL of table to send.
+  var baseUrl = window.location.href.toString().replace(new RegExp("[^/]*$"), "");
+  var tableUrl = baseUrl + "messier.xml";
+
   // Broadcasts a table given a hub connection.
   var send = function(connection) {
-      var msg = new samp.Message("table.load.votable",
-                                 {"url": "file:///mbt/data/table/messier.xml"});
+      var msg = new samp.Message("table.load.votable", tableUrl);
       connection.notifyAll([msg]);
   };
 
