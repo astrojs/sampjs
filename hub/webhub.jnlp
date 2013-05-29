@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<jnlp spec="1.0+" codebase="http://marktaylor.github.com/sampjs/hub"
+<jnlp spec="1.0+" codebase="http://astrojs.github.com/sampjs/hub"
                   href="webhub.jnlp">
   <information>
     <title>JSAMP Hub</title>
