@@ -1299,6 +1299,7 @@ var samp = (function() {
     jss.ping = ping;
     jss.isSubscribed = isSubscribed;
     jss.Connector = Connector;
+    jss.Connection = Connection;
     jss.CallableClient = CallableClient;
     jss.ClientTracker = ClientTracker;
 
