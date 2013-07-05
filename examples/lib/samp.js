@@ -1259,7 +1259,7 @@ var samp = (function() {
             var conn;
             var e;
             try {
-                conn = new Connection(result, 1000);
+                conn = new Connection(result);
             }
             catch (e) {
                 errorHandler(e);
