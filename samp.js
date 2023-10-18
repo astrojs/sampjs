@@ -89,7 +89,7 @@ var samp = (function() {
         var child;
         for (i = 0; i < el.childNodes.length; i++ ) {
             child = el.childNodes[i];
-            if (child.nodeType === 1) {           // Element 
+            if (child.nodeType === 1) {           // Element
                 throw new Error("Element found in text content");
             }
             else if (child.nodeType === 3 ||      // Text
@@ -143,7 +143,7 @@ var samp = (function() {
             ok = ok && typeList[i] === actualTypeList[i];
         }
         if (!ok) {
-            throw new Error("Param type list mismatch: " 
+            throw new Error("Param type list mismatch: "
                           + "[" + typeList + "] != "
                           + "[" + actualTypeList + "]");
         }
@@ -174,7 +174,7 @@ var samp = (function() {
             result.push(prefix + "    </data>",
                         prefix + "  </array>",
                         prefix + "</value>");
-          
+
             return result.join("\n");
         }
         else if (type === TYPE_MAP) {
@@ -741,7 +741,7 @@ var samp = (function() {
     //     receiveNotification(string sender-id, map message)
     //     receiveCall(string sender-id, string msg-id, map message)
     //     receiveResponse(string responder-id, string msg-tag, map response)
-    // 
+    //
     // The successHandler argument will be called with no arguments if the
     // allowCallbacks hub method completes successfully - it is a suitable
     // hook to use for declaring subscriptions.
@@ -1317,3 +1317,5 @@ var samp = (function() {
 
     return jss;
 })();
+
+module.exports = { samp }
