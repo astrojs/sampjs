@@ -1,6 +1,6 @@
 {
   "name": "sampjs",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "sampjs is a small JavaScript library for using the SAMP Web Profile from within web pages.",
   "main": "samp.js",
   "directories": {
