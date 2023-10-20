@@ -29,9 +29,9 @@ var samp = (function() {
     var WEBSAMP_CLIENT_PREFIX = "";
 
     // Tokens representing permissible types in a SAMP object (e.g. a message)
-    TYPE_STRING = "string";
-    TYPE_LIST = "list";
-    TYPE_MAP = "map";
+    var TYPE_STRING = "string";
+    var TYPE_LIST = "list";
+    var TYPE_MAP = "map";
 
     var heir = function(proto) {
         function F() {};
