@@ -1,0 +1,34 @@
+{
+  "name": "sampjs",
+  "version": "1.0.2",
+  "description": "sampjs is a small JavaScript library for using the SAMP Web Profile from within web pages.",
+  "main": "samp.js",
+  "directories": {
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astrojs/sampjs"
+  },
+  "keywords": [
+    "samp",
+    "sampjs",
+    "ivoa"
+  ],
+  "author": {
+    "name": "Mark Taylor",
+    "email": "m.b.taylor@bristol.ac.uk",
+    "url": "https://www.star.bristol.ac.uk/~mbt/"
+  },
+  "contributors": [
+    {
+      "name": "Daniel Garcia Briseno",
+      "email": "dgarciabriseno@sesda.com"
+    }
+  ],
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/astrojs/sampjs/issues"
+  },
+  "homepage": "https://github.com/astrojs/sampjs#readme"
+}
